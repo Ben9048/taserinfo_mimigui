@@ -49,8 +49,8 @@ imgui.OnFrame(function() return renderWindow[0] end, function(player)
     imgui.PushFont(fonta[25])
     imgui.CenterText('TaserInfo by Ben Puls')
     imgui.PopFont()
-    imgui.Separator()
-    if imgui.Button(faicons.UP_DOWN_LEFT_RIGHT..u8' Положение') then
+
+    if imgui.Button(u8' Положение') then
         if imgui.IsItemHovered() then
             imgui.BeginTooltip()
             imgui.Text(u8'Изменить положение текста')
@@ -69,13 +69,9 @@ imgui.OnFrame(function() return renderWindow[0] end, function(player)
         ini.save(cfg, 'taserinfo.ini')
     end
     imgui.SameLine()
-    if imgui.Checkbox('InfoBar', infobar) then
-        cfg.infobar.lock = not cfg.infobar.lock
-        ini.save(cfg, 'taserinfo.ini')
-    end
-    imgui.SameLine()
-    imgui.ToggleButton("Hello world", toggle)
-    
+    imgui.Separator()
+
+
     if imgui.SliderInt(u8' Размер шрифта', SliderOne, 3, 35) then
         cfg.taser.size = SliderOne[0]
         ini.save(cfg, 'taserinfo.ini')
@@ -86,35 +82,21 @@ imgui.OnFrame(function() return renderWindow[0] end, function(player)
         ini.save(cfg, 'taserinfo.ini')
         font = renderCreateFont('Arial', cfg.taser.size, cfg.taser.style)
     end
-    if imgui.CollapsingHeader(faicons.FOLDER_GEAR..u8' Параметры') then
+    imgui.Separator()
+    if imgui.CollapsingHeader(u8' Параметры') then
         imgui.TextWrapped(u8'Taser: ' .. (cfg.taser.lock and u8"Включен" or u8"Выключен")..'\nSiren: ' .. (cfg.siren.lock and u8"Включен" or u8"Выключен")..'\nSize: '.. cfg.taser.size .. '\nStyle: '.. cfg.taser.style ..'\nPosition oX, oY: '..cfg.pos.posX..', '..cfg.pos.posY)
         imgui.Separator()
     end
-    if imgui.CollapsingHeader(faicons.FOLDER_GEAR..u8' Описание') then
+    if imgui.CollapsingHeader(u8' Описание') then
         imgui.TextWrapped(u8'Скрипт отображает наличие Тайзера у персонажа.\nИ также проверяет наличие сирены.')
         imgui.Separator()
     end
-    if imgui.CollapsingHeader(faicons.SQUARE_TERMINAL..u8' Команды') then
+    if imgui.CollapsingHeader(u8' Команды') then
         imgui.TextWrapped(u8'/taserinfo - Основная команда\n/tasers - Включение/выключение тайзера\n/sirens - Включение/выключение сирены \n/taserpos - Изменение положения индикаторов\n/tasersize 3-35 - Изменение размеров текста\n/taserstyle 1-73 - Изменение стиля текста')
         imgui.Separator()
     end
     imgui.End()
 end)
-
-local newFrame2 = imgui.OnFrame(
-    
-    function() return info[0] end,
-    function(player)
-        
-        imgui.theme()
-        imgui.SetNextWindowPos(imgui.ImVec2(cfg.pos.posX, cfg.pos.posY), imgui.Cond.Always)
-        imgui.SetNextWindowSize(imgui.ImVec2(150, 300), imgui.Cond.FirstUseEver)
-        imgui.Begin("TaserInfo", info, imgui.WindowFlags.NoResize + imgui.WindowFlags.NoTitleBar + imgui.WindowFlags.NoMove)
-        imgui.PushFont(fontsize)
-        imgui.Text('Taser: ' .. (cfg.taser.lock and u8"Включено" or u8"Выключено"))
-        imgui.End()
-        
-    end)
 
 function main()
     if not isSampfuncsLoaded() or not isSampLoaded() then return end
