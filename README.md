@@ -1,2 +1,2 @@
 # TaserInfo by Moon Imgui for SA:MP
-![Screenshot](https://imgur.com/R0rWdKH)
+![Image alt](https://github.com/byBenPuls/files/blob/main/08.12.45.781.jpg)
